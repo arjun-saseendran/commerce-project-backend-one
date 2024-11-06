@@ -23,15 +23,18 @@ const addProduct = async (req, res) => {
     });
 };
 
-const viewProductDetails = (req, res) => {
+const viewProductDetails = async (req, res) => {
   const { id } = req.params;
 
-  const product = new Product.findById(id);
-  if (product) {
-    res.status(200).send(product);
-  } else {
-    res.status(404).send("Something went wrong");
-  }
+  await Product.findById(id)
+    .then((product) => {
+      if (product) {
+        res.status(200).send(product);
+      } else {
+        res.status(404).send("Product not found");
+      }
+    })
+    .catch((error) => res.status(500).send(error));
 };
 
 export { renderProducts, addProduct, viewProductDetails };
