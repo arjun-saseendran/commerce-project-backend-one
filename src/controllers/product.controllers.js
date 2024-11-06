@@ -9,4 +9,10 @@ const renderProducts = async (req, res) => {
   }
 };
 
+const addProduct = (req, res) => {
+  const product = new Product(req.body);
+  if (product) {
+  }
+};
+
 export { renderProducts };
