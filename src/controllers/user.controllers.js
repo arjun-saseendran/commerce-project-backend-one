@@ -1,12 +1,27 @@
-import { User } from "../models/user.models";
+import { User } from "../models/user.models.js";
+import bcrypt from "bcrypt";
+
+const salt = 10;
 
 const signup = async (req, res) => {
-  const newUser = new User(req.body)
-    .then((response) => {
-      newUser.save();
-      res.status(201).send("Signup successful");
-    })
-    .catch((error) => res.status(400).send("Something went wrong ", error));
+  bcrypt.hash(req.body.password, salt, (err, hash) => {
+    if (hash) {
+      const user = new User(req.body);
+      user.password = hash;
+      user
+        .save()
+        .then((user) => {
+          console.log(user);
+
+          res.status(201).json({ message: "Signup succefull" });
+        })
+        .catch((error) =>
+          res.status(400).json({ message: "Something went wrong" })
+        );
+    } else {
+      res.status(400).json({ message: "Somethig went wrong" });
+    }
+  });
 };
 
 export { signup };
