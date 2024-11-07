@@ -4,7 +4,7 @@ import UserRouter from "./routes/user.routes.js";
 import cors from "cors";
 const app = express();
 
-export const corsOptions = {
+const corsOptions = {
   origin: process.env.CORS || "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
