@@ -4,14 +4,16 @@ import bcrypt from "bcrypt";
 const salt = 10;
 
 const signup = async (req, res) => {
-  bcrypt.hash(req.body.password, salt, (err, hash) => {
+  bcrypt.hash(req.body.user.password, salt, (err, hash) => {
     if (hash) {
-      const user = new User(req.body);
-      user.password = hash;
-      user
+      const newUser = new User(req.body.user);
+      console.log(newUser);
+
+      newUser.password = hash;
+      newUser
         .save()
-        .then((user) => {
-          console.log(user);
+        .then((resUser) => {
+          console.log(resUser);
 
           res.status(201).json({ message: "Signup succefull" });
         })
