@@ -2,7 +2,7 @@ import express from "express";
 import ProductRouter from "./routes/product.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import cors from "cors";
-import { corsOptions } from "../index.js";
+import corsOptions from "../index.js";
 const app = express();
 
 app.use(cors(corsOptions));
