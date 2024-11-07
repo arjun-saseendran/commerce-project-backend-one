@@ -26,4 +26,28 @@ const signup = async (req, res) => {
   });
 };
 
-export { signup };
+const login = (req, res) => {
+  const loginPassword = req.body.user.password;
+  User.findOne({ email: req.body.user.email })
+    .then((loginUser) => {
+      if (loginUser) {
+        console.log(loginUser);
+
+        const matchPassword = loginUser.password;
+        console.log(matchPassword);
+
+        bcrypt.compare(loginPassword, matchPassword, (err, success) => {
+          if (success) {
+            console.log(success);
+
+            res.status(200).json({ message: "Login success" });
+          } else {
+            res.status(404).json({ message: "User not found" });
+          }
+        });
+      }
+    })
+    .catch((error) => res.status(400).json({ message: "Bad request" }));
+};
+
+export { signup, login };
