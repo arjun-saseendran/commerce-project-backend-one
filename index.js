@@ -1,14 +1,8 @@
 import { app } from "./src/app.js";
 import dotenv from "dotenv";
 import connectDB from "./src/db/db.connection.js";
-
 dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3000;
-export const corsOptions = {
-  origin: process.env.CORS || "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  credentials: true,
-};
 
 connectDB()
   .then(() => {
