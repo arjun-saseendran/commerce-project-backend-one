@@ -5,8 +5,8 @@ const renderCartItems = (req, res) => {
 };
 
 const addToCart = async (req, res) => {
-  const { user, product, quantity } = req.body;
-  const cartItem = new Cart({ user: user._id, product: product._id, quantity });
+  const { product, quantity } = req.body;
+  const cartItem = new Cart({ user: req.user._id, product, quantity });
   await cartItem
     .save()
     .then((cart) => {
