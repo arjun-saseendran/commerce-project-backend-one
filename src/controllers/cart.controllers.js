@@ -9,7 +9,11 @@ const addToCart = (req, res) => {
   const cartItem = new Cart(user._id, product._id, quantity);
   cartItem
     .save()
-    .then((cart) => res.json(cart))
+    .then((cart) => {
+      res.json(cart);
+
+      console.log(cart);
+    })
     .catch((error) => {
       console.log(error);
       res.status(400).json(error);
