@@ -14,11 +14,15 @@ const signup = async (req, res) => {
       newUser
         .save()
         .then((resUser) => {
+          console.log(resUser);
+
           res.status(201).json({ message: "Signup succefull" });
         })
-        .catch((error) =>
-          res.status(400).json({ message: "Something went wrong" })
-        );
+        .catch((error) => {
+          console.log(error);
+
+          res.status(400).json({ message: "Something went wrong" });
+        });
     } else {
       res.status(400).json({ message: "Somethig went wrong" });
     }
@@ -26,27 +30,25 @@ const signup = async (req, res) => {
 };
 
 const login = (req, res) => {
-  const loginPassword = req.body.user.password;
-  User.findOne({ email: req.body.user.email })
+  const { email, password } = req.body;
+  User.findOne({ email })
     .then((loginUser) => {
       if (loginUser) {
-        console.log(loginUser);
-
-        const matchPassword = loginUser.password;
-        console.log(matchPassword);
-
-        bcrypt.compare(loginPassword, matchPassword, (err, success) => {
+        bcrypt.compare(password, loginUser.password, (err, success) => {
           if (success) {
-            console.log(success);
-
-            res.status(200).json({ message: "Login success" });
+            const token = jwt.sign({ email }, process.env.JWT_SECRET);
+            res.status(200).json({ token });
           } else {
-            res.status(404).json({ message: "User not found" });
+            res.status(400).json({ message: "Invalid credentials" });
           }
         });
+      } else {
+        res.status(404).json({ message: "Invalid email id" });
       }
     })
-    .catch((error) => res.status(400).json({ message: "Bad request" }));
+    .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
+  const token = jwt.sign;
+  ({ email }), process.env.JWT_SECRET;
 };
 
 export { signup, login };
