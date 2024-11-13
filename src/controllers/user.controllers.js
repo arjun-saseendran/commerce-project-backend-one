@@ -1,20 +1,19 @@
 import { User } from "../models/user.models.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const salt = 10;
 
 const signup = async (req, res) => {
-  bcrypt.hash(req.body.user.password, salt, (err, hash) => {
+  const { password } = req.body;
+  bcrypt.hash(password, salt, (err, hash) => {
     if (hash) {
-      const newUser = new User(req.body.user);
-      console.log(newUser);
+      const newUser = new User(req.body);
 
       newUser.password = hash;
       newUser
         .save()
         .then((resUser) => {
-          console.log(resUser);
-
           res.status(201).json({ message: "Signup succefull" });
         })
         .catch((error) =>
