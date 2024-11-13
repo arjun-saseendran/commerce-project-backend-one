@@ -5,10 +5,16 @@ import CartRouter from "./routes/cart.routes.js";
 import cors from "cors";
 
 const app = express();
-const corsOptions = {
-  origin: [process.env.CORS, "http://localhost:5173"],
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  credentials: true,
+
+const whitelist = [process.env.CORS, "http://localhost:5173"];
+const corsOptionsDelegate = function (req, callback) {
+  let corsOptions;
+  if (whitelist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
 app.use(express.json());
