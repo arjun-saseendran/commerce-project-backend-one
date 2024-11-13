@@ -1,6 +1,9 @@
 import { User } from "../models/user.models.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config({ path: "./.env" });
 
 const salt = 10;
 
@@ -47,8 +50,7 @@ const login = (req, res) => {
       }
     })
     .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
-  const token = jwt.sign;
-  ({ email }), process.env.JWT_SECRET;
+  const token = jwt.sign({ email }, process.env.JWT_SECRET);
 };
 
 export { signup, login };
