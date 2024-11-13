@@ -26,7 +26,7 @@ const addProduct = async (req, res) => {
 const viewProductDetails = async (req, res) => {
   const { id } = req.params;
 
-  await Product.findById({ id })
+  await Product.findById(id)
     .then((product) => {
       if (product) {
         res.status(200).json(product);
