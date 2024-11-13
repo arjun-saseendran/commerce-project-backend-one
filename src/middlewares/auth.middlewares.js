@@ -3,6 +3,7 @@ import { User } from "../models/user.models.js";
 
 const authUser = async (req, res, next) => {
   const token = req.header("Authorization");
+
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
