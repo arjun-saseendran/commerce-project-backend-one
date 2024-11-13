@@ -5,7 +5,7 @@ dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: process.env.CORS || "http://localhost:5173",
+  origin: [process.env.CORS, "http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
 };
