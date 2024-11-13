@@ -4,10 +4,10 @@ const renderCartItems = (req, res) => {
   res.send("All cart items");
 };
 
-const addToCart = (req, res) => {
+const addToCart = async (req, res) => {
   const { user, product, quantity } = req.body;
   const cartItem = new Cart(user._id, product._id, quantity);
-  cartItem
+  await cartItem
     .save()
     .then((cart) => {
       res.json(cart);
