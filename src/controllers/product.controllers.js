@@ -29,7 +29,7 @@ const viewProductDetails = async (req, res) => {
   await Product.findById(id)
     .then((product) => {
       if (product) {
-        res.status(200).send(product);
+        res.status(200).json(product);
       } else {
         res.status(404).send("Product not found");
       }
