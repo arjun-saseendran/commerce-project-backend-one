@@ -24,10 +24,10 @@ const addProduct = async (req, res) => {
 };
 
 const viewProductDetails = async (req, res) => {
-  const { productId } = req.params;
+  const { id } = req.params;
 
   try {
-    const product = await Product.findById(productId);
+    const product = await Product.findById(id);
 
     console.log(product);
 
