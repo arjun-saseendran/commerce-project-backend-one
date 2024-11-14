@@ -41,4 +41,7 @@ const viewProductDetails = async (req, res) => {
   }
 };
 
+let result = viewProductDetails();
+console.log(result);
+
 export { renderProducts, addProduct, viewProductDetails };

@@ -1,7 +1,10 @@
 import { Cart } from "../models/cart.models.js";
 
-const renderCartItems = (req, res) => {
-  res.send("All cart items");
+const renderCartItems = async (req, res) => {
+  const user = req.user;
+  const cartItem = await Cart.find({ user: user._id }).populate("product");
+  console.log(cartItem);
+  res.status(200).json({ cartItem });
 };
 
 const addToCart = async (req, res) => {
