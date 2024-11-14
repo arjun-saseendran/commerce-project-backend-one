@@ -44,4 +44,4 @@ const addToCart = async (req, res) => {
     });
 };
 
-export { renderCartItems, addToCart };
+export { renderCartItems, addToCart, updateCartQuantity };
