@@ -7,6 +7,27 @@ const renderCartItems = async (req, res) => {
   res.status(200).json({ cartItem });
 };
 
+const updateCartQuantity = async (req, res) => {
+  const quantity = req.body.quantity;
+  const cartItemId = req.body.cartItemId;
+  if (quantity > 0) {
+    const cartItem = await Cart.findById(cartItemId);
+    cartItem.quantity = quantity;
+    cartItem
+      .save()
+      .then((cart) => res.status(200).json({ cartItem: cart }))
+      .catch((error) =>
+        res.status(400).json({ message: "Bad request", error })
+      );
+  } else {
+    Cart.findOneAndDelete({ _id: cartItemId })
+      .then(() => res.status(200).json({ message: "Deleted successfully" }))
+      .catch(() => {
+        res.status(400).json({ message: "Bad request" });
+      });
+  }
+};
+
 const addToCart = async (req, res) => {
   const { product, quantity } = req.body;
   const cartItem = new Cart({ user: req.user._id, product, quantity });
