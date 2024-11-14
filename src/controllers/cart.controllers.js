@@ -2,9 +2,9 @@ import { Cart } from "../models/cart.models.js";
 
 const renderCartItems = async (req, res) => {
   const user = req.user;
-  const cartItem = await Cart.find({ user: user._id }).populate("product");
+  const cartItems = await Cart.find({ user: user._id }).populate("product");
   console.log(cartItem);
-  res.status(200).json({ cartItem });
+  res.status(200).json({ cartItems });
 };
 
 const updateCartQuantity = async (req, res) => {
