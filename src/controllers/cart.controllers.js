@@ -20,7 +20,7 @@ const updateCartQuantity = async (req, res) => {
         res.status(400).json({ message: "Bad request", error })
       );
   } else {
-    Cart.findByIdAndDelete({ _id: cartItemId })
+    Cart.findOneAndDelete({ _id: cartItemId })
       .then(() => res.status(200).json({ message: "Deleted successfully" }))
       .catch(() => {
         res.status(400).json({ message: "Bad request" });
