@@ -26,21 +26,18 @@ const addProduct = async (req, res) => {
 const viewProductDetails = async (req, res) => {
   const { id } = req.params;
 
-  try {
-    const product = await Product.findById(id);
-
-    console.log(product);
-
-    if (product) {
-      res.status(200).json(product);
-    } else {
-      res.status(404).send("Product not found");
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  Product.findById(id)
+    .exec()
+    .then((product) => {
+      if (product) {
+        res.status(200).json({product});
+      } else {
+        res.status(404).json({ message: "Product not found" });
+      }
+    })
+    .catch((err) => {
+      res.status(404).json({ message: "Product not found" });
+    });
 };
-
-
 
 export { renderProducts, addProduct, viewProductDetails };
