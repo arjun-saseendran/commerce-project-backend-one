@@ -9,7 +9,10 @@ const cartSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Product",
   },
-  quantity: Number,
+  quantity: {
+    type: Number,
+    default: 1,
+  },
 });
 
 export const Cart = mongoose.model("Cart", cartSchema);
