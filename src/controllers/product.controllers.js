@@ -30,7 +30,7 @@ const viewProductDetails = async (req, res) => {
     .exec()
     .then((product) => {
       if (product) {
-        res.status(200).json({product});
+        res.status(200).json({ product });
       } else {
         res.status(404).json({ message: "Product not found" });
       }
