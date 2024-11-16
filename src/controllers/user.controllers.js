@@ -50,7 +50,7 @@ const login = (req, res) => {
       }
     })
     .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
-  const token = jwt.sign({ email }, process.env.JWT_SECRET);
+  
 };
 
 export { signup, login };
