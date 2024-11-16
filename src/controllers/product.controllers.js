@@ -10,7 +10,7 @@ const renderProducts = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const newProduct = new Product(req.body.product);
+  const newProduct = new Product(req.body);
   console.log(newProduct);
 
   await newProduct
