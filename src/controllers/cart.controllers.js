@@ -4,7 +4,7 @@ const renderCartItems = async (req, res) => {
   const user = req.user;
   const cartItems = await Cart.find({ user: user._id }).populate("product");
   console.log(cartItems);
-  res.status(200).json( cartItems );
+  res.status(200).json( {cartItems} );
 };
 
 const updateCartQuantity = async (req, res) => {
