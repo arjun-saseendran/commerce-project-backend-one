@@ -10,9 +10,7 @@ const signup = async (req, res) => {
   bcrypt.hash(password, process.env.SALT, (err, hash) => {
     if (hash) {
       const newUser = new User(req.body);
-
       newUser.password = hash;
-      newUser.isAdmin = false
       newUser
         .save()
         .then((response) => {
@@ -52,9 +50,8 @@ const login = (req, res) => {
 };
 
 const checkAdmin = (req, res) => {
-  console.log('Admin');
-  res.status('Success')
-  
-}
+  console.log("Admin");
+  res.status("Success");
+};
 
 export { signup, login, checkAdmin };
