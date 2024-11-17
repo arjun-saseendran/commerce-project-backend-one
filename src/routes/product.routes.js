@@ -4,7 +4,7 @@ import {
   renderProducts,
   viewProductDetails,
 } from "../controllers/product.controllers.js";
-import authAdmin from '../middlewares/auth.middlewares.js'
+import {authAdmin} from '../middlewares/auth.middlewares.js'
 
 const router = express.Router();
 
