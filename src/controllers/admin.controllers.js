@@ -9,11 +9,11 @@ const addProduct = (req, res) => {
     discount,
     stock,
   };
-  const newProduct = new Product(product)
-  newProduct.save().then(response => {
-console.log(response);
-res.status(201).json({message: 'Product added succfully'})
-  })
+  const newProduct = new Product(product);
+  newProduct.save().then((response) => {
+    console.log(response);
+    res.status(201).json({ message: "Product added succfully" });
+  });
 };
 
-export {addProduct}
+export { addProduct };
