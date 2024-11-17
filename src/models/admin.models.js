@@ -19,10 +19,7 @@ const adminSchema = new Schema({
         type: String,
         required: true
     },
-    products:{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
-    }
+    
 })
 
 export const Admin = mongoose.model('Admin', adminSchema)
