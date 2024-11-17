@@ -19,6 +19,10 @@ const adminSchema = new Schema({
         type: String,
         required: true
     },
+    adminrole: {
+        type: Boolean,
+        default: true
+    }
     
 })
 

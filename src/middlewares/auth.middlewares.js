@@ -29,7 +29,8 @@ const authAdmin = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET_ADMIN);
       if (decoded.email) {
         req.admin = await Admin.findOne({ email: decoded.email });
-        next();
+        if(req.admin.adminrole){ next();}
+       
       } else {
         res.status(401).json({ message: "Invalid token" });
       }

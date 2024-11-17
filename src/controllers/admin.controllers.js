@@ -14,6 +14,7 @@ const signup = async (req, res) => {
       const newAdmin = new Admin(req.body);
 
       newAdmin.password = hash;
+      newAdmin.adminrole = true
       newAdmin
         .save()
         .then((admin) => {
