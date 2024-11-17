@@ -5,11 +5,9 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: "./.env" });
 
-const salt = 10;
-
 const signup = async (req, res) => {
   const { password } = req.body;
-  bcrypt.hash(password, salt, (err, hash) => {
+  bcrypt.hash(password, process.env.SALT, (err, hash) => {
     if (hash) {
       const newUser = new User(req.body);
 
@@ -50,7 +48,12 @@ const login = (req, res) => {
       }
     })
     .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
-  
 };
 
-export { signup, login };
+const checkAdmin = (req, res) => {
+  console.log('Admin');
+  res.status('Success')
+  
+}
+
+export { signup, login, checkAdmin };
