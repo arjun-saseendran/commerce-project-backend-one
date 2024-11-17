@@ -1,11 +1,21 @@
-import express from 'express'
-import { addProduct } from '../controllers/admin.controllers.js'
-import { authAdmin } from '../middlewares/auth.middlewares'
+import express from "express";
+import { addProduct } from "../controllers/admin.controllers.js";
+import { authAdmin } from "../middlewares/auth.middlewares";
+import multer from "multer";
 
+const storage = multer.diskStorage({
+  destination: (req, image, cd) => {
+    cd(null, "src/public/product_images");
+  },
+  filename: (req, image, cb) => {
+    cb(null, Date.now() + image.originalname);
+  },
+});
 
-const router =  express.Router()
+const upload = multer({ storage: storage });
 
-router.post('/add-product', authAdmin, addProduct)
+const router = express.Router();
 
+router.post("/add-product", authAdmin, upload.single("image"), addProduct);
 
 export default router;
