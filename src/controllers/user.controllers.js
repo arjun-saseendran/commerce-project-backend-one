@@ -39,7 +39,7 @@ const login = (req, res) => {
       if (loginUser) {
         bcrypt.compare(password, loginUser.password, (err, success) => {
           if (success) {
-            const token = jwt.sign({ email }, process.env.JWT_SECRET);
+            const token = jwt.sign({ email }, process.env.JWT_SECRET_USER);
             res.status(200).json({ token });
           } else {
             res.status(400).json({ message: "Invalid credentials" });

@@ -17,6 +17,7 @@ const addProduct = (req, res) => {
     price,
     discount,
     stock,
+    admin: req.admin._id,
   };
   const newProduct = new Product(product);
   newProduct.save().then((response) => {

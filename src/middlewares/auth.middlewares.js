@@ -7,7 +7,7 @@ const authUser = async (req, res, next) => {
 
   if (token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_USER);
       if (decoded.email) {
         req.user = await User.findOne({ email: decoded.email });
         next();
@@ -26,7 +26,7 @@ const authAdmin = async (req, res, next) => {
   const token = req.header("Authorization");
   if (token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_ADMIN);
       if (decoded.email) {
         req.admin = await Admin.findOne({ email: decoded.email });
         next();
