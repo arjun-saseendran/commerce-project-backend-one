@@ -9,7 +9,7 @@ const renderProducts = async (req, res) => {
   }
 };
 
-const addProduct = (req, res) => {
+const addProduct = async(req, res) => {
   const { title, description, price, discount, stock } = req.body;
   console.log(req.file);
   
@@ -23,7 +23,7 @@ const addProduct = (req, res) => {
     
   };
   const newProduct = new Product(product);
-  newProduct.save().then((response) => {
+  await newProduct.save().then((response) => {
     console.log(response);
     res.status(201).json({ message: "Product added succfully" });
   });
