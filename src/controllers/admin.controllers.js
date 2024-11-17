@@ -1,19 +1,55 @@
-import Product from "../models/product.models.js";
+import { Admin } from "../models/admin.models.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-const addProduct = (req, res) => {
-  const { title, price, discount, stock } = req.body;
-  const product = {
-    image: `product_images/${req.file.filename}`,
-    title,
-    price,
-    discount,
-    stock,
-  };
-  const newProduct = new Product(product);
-  newProduct.save().then((response) => {
-    console.log(response);
-    res.status(201).json({ message: "Product added succfully" });
+dotenv.config({ path: "./.env" });
+
+const salt = 10;
+
+const signup = async (req, res) => {
+  const { password } = req.body;
+  bcrypt.hash(password, salt, (err, hash) => {
+    if (hash) {
+      const newAdmin = new Admin(req.body);
+
+      newAdmin.password = hash;
+      newAdmin
+        .save()
+        .then((admin) => {
+          console.log(admin);
+
+          res.status(201).json({ message: "Signup succefull" });
+        })
+        .catch((error) => {
+          console.log(error);
+
+          res.status(400).json({ message: "Something went wrong" });
+        });
+    } else {
+      res.status(400).json({ message: "Somethig went wrong" });
+    }
   });
 };
 
-export { addProduct };
+const login = (req, res) => {
+  const { email, password } = req.body;
+  User.findOne({ email })
+    .then((loginAdmin) => {
+      if (loginAdmin) {
+        bcrypt.compare(password, loginUser.password, (err, success) => {
+          if (success) {
+            const token = jwt.sign({ email }, process.env.JWT_SECRET);
+            res.status(200).json({ token });
+          } else {
+            res.status(400).json({ message: "Invalid credentials" });
+          }
+        });
+      } else {
+        res.status(404).json({ message: "Invalid email id" });
+      }
+    })
+    .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
+};
+
+export { signup, login };

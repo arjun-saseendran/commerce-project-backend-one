@@ -9,18 +9,20 @@ const renderProducts = async (req, res) => {
   }
 };
 
-const addProduct = async (req, res) => {
-  const newProduct = new Product(req.body);
-  console.log(newProduct);
-
-  await newProduct
-    .save()
-    .then((product) => {
-      res.status(201).send(product);
-    })
-    .catch((error) => {
-      res.status(400).send(error);
-    });
+const addProduct = (req, res) => {
+  const { title, price, discount, stock } = req.body;
+  const product = {
+    image: `product_images/${req.file.filename}`,
+    title,
+    price,
+    discount,
+    stock,
+  };
+  const newProduct = new Product(product);
+  newProduct.save().then((response) => {
+    console.log(response);
+    res.status(201).json({ message: "Product added succfully" });
+  });
 };
 
 const viewProductDetails = async (req, res) => {
