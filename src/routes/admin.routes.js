@@ -1,7 +1,10 @@
 import express from "express";
 import { addProduct } from "../controllers/product.controllers.js";
+import { login, signup } from "../controllers/user.controllers.js";
 import { authAdmin } from "../middlewares/auth.middlewares";
 import multer from "multer";
+
+
 
 const storage = multer.diskStorage({
   destination: (req, image, cd) => {
@@ -16,6 +19,10 @@ const upload = multer({ storage: storage });
 
 const router = express.Router();
 
+router.post("/signup", signup);
+router.post("/login", login);
 router.post("/add-product", authAdmin, upload.single("image"), addProduct);
+
+
 
 export default router;
