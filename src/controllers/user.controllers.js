@@ -12,6 +12,7 @@ const signup = async (req, res) => {
       const newUser = new User(req.body);
 
       newUser.password = hash;
+      newUser.isAdmin = false
       newUser
         .save()
         .then((response) => {
