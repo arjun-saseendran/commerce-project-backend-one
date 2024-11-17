@@ -4,11 +4,16 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./.env" });
+const salt = parseInt(process.env.SALT)
 
 const signup = async (req, res) => {
   const { password } = req.body;
-  bcrypt.hash(password, process.env.SALT, (err, hash) => {
+  console.log(password);
+
+  bcrypt.hash(password, salt, (err, hash) => {
     if (hash) {
+      console.log(hash);
+
       const newUser = new User(req.body);
       newUser.password = hash;
       newUser
@@ -36,7 +41,7 @@ const login = (req, res) => {
       if (loginUser) {
         bcrypt.compare(password, loginUser.password, (err, success) => {
           if (success) {
-            const token = jwt.sign({ email }, process.env.JWT_SECRET_USER);
+            const token = jwt.sign({ email }, process.env.JWT_SECRET);
             res.status(200).json({ token });
           } else {
             res.status(400).json({ message: "Invalid credentials" });
