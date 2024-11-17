@@ -10,10 +10,13 @@ const renderProducts = async (req, res) => {
 };
 
 const addProduct = (req, res) => {
-  const { title, price, discount, stock } = req.body;
+  const { title, description, price, discount, stock } = req.body;
+  console.log(req.file);
+  
   const product = {
     image: `product_images/${req.file.filename}`,
     title,
+    description,
     price,
     discount,
     stock,

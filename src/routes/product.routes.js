@@ -16,12 +16,12 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({storage: storage})
+const upload = multer({storage})
 
 const router = express.Router();
 
 router.get("/", renderProducts);
-router.post('/', authAdmin, upload.single('file'), addProduct)
+router.post('/', authAdmin, upload.single('image'), addProduct)
 router.get("/details/:id", viewProductDetails);
 
 export default router;
