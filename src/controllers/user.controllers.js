@@ -14,8 +14,8 @@ const signup = async (req, res) => {
       newUser.password = hash;
       newUser
         .save()
-        .then((resUser) => {
-          console.log(resUser);
+        .then((response) => {
+          console.log(response);
 
           res.status(201).json({ message: "Signup succefull" });
         })
