@@ -37,7 +37,7 @@ const login = (req, res) => {
   Admin.findOne({ email })
     .then((loginAdmin) => {
       if (loginAdmin) {
-        bcrypt.compare(password, loginUser.password, (err, success) => {
+        bcrypt.compare(password, loginAdmin.password, (err, success) => {
           if (success) {
             const token = jwt.sign({ email }, process.env.JWT_SECRET);
             res.status(200).json({ token });
