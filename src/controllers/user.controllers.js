@@ -49,9 +49,4 @@ const login = (req, res) => {
     .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
 };
 
-const checkAdmin = (req, res) => {
-  console.log("Admin");
-  res.status("Success");
-};
-
-export { signup, login, checkAdmin };
+export { signup, login };
