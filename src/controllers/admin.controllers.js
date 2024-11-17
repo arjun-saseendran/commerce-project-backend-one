@@ -34,7 +34,7 @@ const signup = async (req, res) => {
 
 const login = (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email })
+  Admin.findOne({ email })
     .then((loginAdmin) => {
       if (loginAdmin) {
         bcrypt.compare(password, loginUser.password, (err, success) => {
