@@ -29,6 +29,8 @@ const authAdmin = async (req, res, next) => {
       if (decoded.email) {
         const user = await User.findOne({ email: decoded.email });
         if (user.isAdmin) {
+          console.log(user.isAdmin);
+          
           next();
         }
       } else {

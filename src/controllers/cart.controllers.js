@@ -3,7 +3,7 @@ import { Cart } from "../models/cart.models.js";
 const renderCartItems = async (req, res) => {
   const user = req.user;
   const cartItems = await Cart.find({ user: user._id }).populate("product");
-  console.log(cartItems);
+  console.log('server ',cartItems);
   res.status(200).json( {cartItems} );
 };
 
