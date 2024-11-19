@@ -11,15 +11,9 @@ dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-
 app.use(
   cors({
-    origin: [
-      process.env.CORS,
-      "http://localhost:5173",
-      "http://127.0.0.1:5173",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: process.env.CORS,
     credentials: true,
   })
 );
@@ -34,9 +28,7 @@ connectDB()
   })
   .catch((error) => console.log("MongoDB connection error ", error));
 
-  
-
-  // routes
-  app.use("/product", ProductRouter);
-  app.use("/user", UserRouter);
-  app.use("/cart", CartRouter);
+// routes
+app.use("/product", ProductRouter);
+app.use("/user", UserRouter);
+app.use("/cart", CartRouter);
