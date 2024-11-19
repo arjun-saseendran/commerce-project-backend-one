@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./.env" });
-const salt = parseInt(process.env.SALT)
+const salt = parseInt(process.env.SALT);
 
 const signup = async (req, res) => {
   const { password } = req.body;
@@ -41,8 +41,14 @@ const login = (req, res) => {
       if (loginUser) {
         bcrypt.compare(password, loginUser.password, (err, success) => {
           if (success) {
-            const token = jwt.sign({ email }, process.env.JWT_SECRET);
-            res.status(200).json({ token });
+            const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, {
+              expiresIn: "15m",
+            });
+            const refreshToken = jwt.sign({ email }, process.env.JWT_SECRET, {
+              expiresIn: "30d",
+            });
+
+            res.status(200).json({ accessToken, refreshToken });
           } else {
             res.status(400).json({ message: "Invalid credentials" });
           }
@@ -54,6 +60,13 @@ const login = (req, res) => {
     .catch((error) => res.status(400).json({ message: "Invalid credentials" }));
 };
 
+const getTokenFromRefreshToken = (req, res) => {
+  const { email } = req.user.email;
 
+  const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, {
+    expiresIn: "15m",
+  });
+  res.status(200).json({ accessToken });
+};
 
-export { signup, login };
+export { signup, login, getTokenFromRefreshToken };
