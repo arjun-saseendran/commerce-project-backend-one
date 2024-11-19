@@ -35,6 +35,8 @@ const signup = async (req, res) => {
 };
 
 const login = (req, res) => {
+  console.log("req.body ", req.body);
+
   const { email, password } = req.body;
   User.findOne({ email })
     .then((loginUser) => {
@@ -44,9 +46,12 @@ const login = (req, res) => {
             const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, {
               expiresIn: "15m",
             });
+
             const refreshToken = jwt.sign({ email }, process.env.JWT_SECRET, {
               expiresIn: "30d",
             });
+
+            console.log(accessToken, refreshToken);
 
             res.status(200).json({ accessToken, refreshToken });
           } else {
@@ -61,11 +66,15 @@ const login = (req, res) => {
 };
 
 const getTokenFromRefreshToken = (req, res) => {
-  const { email } = req.user.email;
+  const { refreshToken } = req.cookies;
 
-  const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: "15m",
-  });
+  const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+  const accessToken = jwt.sign(
+    { email: decoded.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "15m" }
+  );
+
   res.status(200).json({ accessToken });
 };
 

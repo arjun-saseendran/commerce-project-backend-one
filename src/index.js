@@ -5,6 +5,7 @@ import ProductRouter from "./routes/product.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3000;
@@ -23,14 +24,17 @@ app.use(
   })
 );
 
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.static("src/public"));
+
 connectDB()
   .then(() => {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch((error) => console.log("MongoDB connection error ", error));
 
-  app.use(express.json());
-  app.use(express.static("src/public"));
+  
 
   // routes
   app.use("/product", ProductRouter);

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.models.js";
 
 const authUser = async (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.cookies.accessToken || req.header("Authorization");
 
   if (token) {
     try {
@@ -22,7 +22,7 @@ const authUser = async (req, res, next) => {
 };
 
 const authAdmin = async (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.cookies.accessToken || req.header("Authorization");
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
