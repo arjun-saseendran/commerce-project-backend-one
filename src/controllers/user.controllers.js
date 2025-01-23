@@ -52,8 +52,25 @@ const login = (req, res) => {
             });
 
             console.log(accessToken, refreshToken);
+            
+            // Set tokens in cookies
+                        const NODE_ENV = process.env.NODE_ENV || "development";
+                        res.cookie("accessToken", accessToken, {
+                          httpOnly: true, // Prevents client-side JS from accessing the cookie
+                          secure: NODE_ENV === "production", // Ensures the cookie is sent over HTTPS in production
+                          sameSite: NODE_ENV === "production" ? "None" : "Lax", // Cross-site cookie setting
+                          maxAge: 15 * 60 * 1000, // 15 minutes
+                        });
+            
+                        res.cookie("refreshToken", refreshToken, {
+                          httpOnly: true,
+                          secure: NODE_ENV === "production",
+                          sameSite: NODE_ENV === "production" ? "None" : "Lax",
+                          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+                        });
 
-            res.status(200).json({ accessToken, refreshToken });
+
+            res.status(200).json({ message: 'Loign success!' });
           } else {
             res.status(400).json({ message: "Invalid credentials" });
           }
@@ -74,6 +91,8 @@ const getTokenFromRefreshToken = (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: "15m" }
   );
+  
+  res.cookie()
 
   res.status(200).json({ accessToken });
 };
